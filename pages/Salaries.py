@@ -32,7 +32,6 @@ st.write(data_tabel)
 
 
 
-
 st.header("")
 st.header("")
 # ---------------------------------------------------------------
@@ -45,15 +44,24 @@ filtered_data = data[data['company_location'].isin(lokasi_pilihan)]
 
 # Membuat grafik perbandingan gaji berdasarkan lokasi
 fig, ax = plt.subplots(figsize=(6, 6))
+rata_rata_gaji = []  # Membuat list untuk menyimpan rata-rata gaji
+
 for lokasi in lokasi_pilihan:
     gaji_lokasi = filtered_data[filtered_data['company_location'] == lokasi]
-    plt.bar(lokasi, gaji_lokasi['salary'].mean(), label=lokasi)
+    rata_rata = gaji_lokasi['salary'].mean()  
+    rata_rata_gaji.append(rata_rata)  
+    plt.bar(lokasi, rata_rata, label=lokasi)
 
 plt.xlabel('Lokasi')
 plt.ylabel('Rata-Rata Gaji')
 plt.title('Perbandingan Gaji Rata-Rata Antar Kota')
-plt.legend()
+
+# Tambahkan teks rata-rata gaji di atas batang
+for i, v in enumerate(rata_rata_gaji):
+    ax.text(i, v + 10, f"{v:.2f}", ha='center', va='bottom')
+    
 st.pyplot(fig)
+
 
 
 st.header("")
@@ -65,16 +73,25 @@ jabatan_pilihan = st.multiselect("Pilih Jabatan", data['job_title'].unique())
 
 # Membuat grafik perbandingan gaji per jabatan
 fig, ax = plt.subplots(figsize=(6, 6))
+rata_rata_gaji = []  # Membuat list untuk menyimpan rata-rata gaji
+
 for jabatan in jabatan_pilihan:
     gaji_jabatan = data[data['job_title'] == jabatan]
-    plt.bar(jabatan, gaji_jabatan['salary'], label=jabatan)
+    rata_rata = gaji_jabatan['salary'].mean()  # Rata-rata gaji untuk jabatan saat ini
+    rata_rata_gaji.append(rata_rata)  # Menambahkannya ke list
+
+    plt.bar(jabatan, rata_rata, label=jabatan)
 
 plt.xlabel('Jabatan')
 plt.ylabel('Rata-Rata Gaji (USD)')
-plt.title('Perbandingan Gaji per Jabatan') # Memutar label jabatan untuk memudahkan pembacaan
+plt.title('Perbandingan Gaji per Jabatan')
 plt.legend()
-st.pyplot(fig)
 
+# Tambahkan teks rata-rata gaji di atas batang
+for i, v in enumerate(rata_rata_gaji):
+    ax.text(i, v + 10, f"${v:.2f}", ha='center', va='bottom')
+
+st.pyplot(fig)
 
 
 st.header("")
@@ -89,14 +106,24 @@ filtered_data = data[data['experience_level'].isin(tingkat_pilihan)]
 
 # Membuat grafik perbandingan gaji
 fig, ax = plt.subplots(figsize=(6, 6))
+rata_rata_gaji = []  # Membuat list untuk menyimpan rata-rata gaji
+
 for tingkat in tingkat_pilihan:
     gaji_tingkat = filtered_data[filtered_data['experience_level'] == tingkat]
-    plt.bar(tingkat, gaji_tingkat['salary'].mean(), label=tingkat)
+    rata_rata = gaji_tingkat['salary'].mean()  # Rata-rata gaji untuk tingkat pengalaman saat ini
+    rata_rata_gaji.append(rata_rata)  # Menambahkannya ke list
+
+    plt.bar(tingkat, rata_rata, label=tingkat)
 
 plt.xlabel('Tingkat Pengalaman')
 plt.ylabel('Rata-Rata Gaji')
 plt.title('Perbandingan Gaji Antar Tingkat Pengalaman')
 plt.legend()
+
+# Tambahkan teks rata-rata gaji di atas batang
+for i, v in enumerate(rata_rata_gaji):
+    ax.text(i, v + 10, f"${v:.2f}", ha='center', va='bottom')
+
 st.pyplot(fig)
 
 
@@ -116,7 +143,10 @@ count_per_size.columns = ['Ukuran Perusahaan', 'Jumlah Perusahaan']
 
 # Membuat grafik jumlah perusahaan berdasarkan ukuran
 fig, ax = plt.subplots(figsize=(6, 6))
-plt.bar(count_per_size['Ukuran Perusahaan'], count_per_size['Jumlah Perusahaan'])
+for i, row in count_per_size.iterrows():
+    plt.bar(row['Ukuran Perusahaan'], row['Jumlah Perusahaan'])
+    ax.text(i, row['Jumlah Perusahaan'] + 10, str(row['Jumlah Perusahaan']), ha='center', va='bottom')
+
 plt.xlabel('Ukuran Perusahaan')
 plt.ylabel('Jumlah Perusahaan')
 plt.title('Jumlah Perusahaan Berdasarkan Ukuran')

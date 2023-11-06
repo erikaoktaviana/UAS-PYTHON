@@ -92,15 +92,39 @@ st.pyplot(fig)
 
 st.header("")
 st.header("")
-st.subheader("Menampilkan Metode Pembayaran yang Disukai")
+st.subheader("Menampilkan Metode Pembayaran yang Populer")
 # ---------------------------------------------------------------
 # Membuat pie chart untuk metode pembayaran yang disukai
 fig, ax = plt.subplots(figsize=(6, 6))
 payment_counts = data['Preferred Payment Method'].value_counts()
 plt.pie(payment_counts, labels=payment_counts.index, autopct='%1.1f%%', startangle=140)
-plt.title('Pie Chart Metode Pembayaran yang Disukai')
+plt.title('Pie Chart Metode Pembayaran yang Populer')
 plt.show()
 st.pyplot(fig)
+
+
+
+
+st.header("")
+st.header("")
+st.subheader("Pengaruh Diskon terhadap Pembelian")
+# ---------------------------------------------------------------
+# Menghitung rata-rata pembelian per tingkat diskon
+average_purchase_by_discount = data.groupby('Discount Applied')['Purchase Amount (USD)'].mean().reset_index()
+
+# Membuat grafik line chart
+fig, ax = plt.subplots()
+ax.plot(average_purchase_by_discount['Discount Applied'], average_purchase_by_discount['Purchase Amount (USD)'], marker='o')
+ax.set_xlabel('Discount Applied (%)')
+ax.set_ylabel('Average Purchase Amount (USD)')
+ax.set_title('Pengaruh Diskon terhadap Pembelian')
+
+for i, v in enumerate(average_purchase_by_discount['Purchase Amount (USD)']):
+    ax.text(average_purchase_by_discount['Discount Applied'][i], v, f"{v:.2f}", ha='right', va='bottom')
+
+# Tampilkan grafik menggunakan st.pyplot()
+st.pyplot(fig)
+
 
 
 
@@ -110,6 +134,15 @@ st.subheader("Statistik Deskriptif untuk Rating Ulasan (Review Rating)")
 # ---------------------------------------------------------------
 rating_stats = data["Review Rating"].describe()
 st.write(rating_stats)
+
+
+
+
+
+
+
+
+
 
 
 
