@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
+import seaborn as sns
 
 # Muat dataset
 data = pd.read_csv("salaries.csv")
@@ -11,6 +12,9 @@ st.set_page_config(page_title="Salaries")
 
 st.subheader("Dataset Salaries")
 st.write(data)
+
+
+sns.set_palette("hls")
 
 
 st.header("")
@@ -155,4 +159,30 @@ st.pyplot(fig)
 
 
 
+st.header("")
+st.header("")
+st.subheader("Perbandingan Gaji antara Kantor dan Remote")
+# ---------------------------------------------------------------
 
+# Filter data
+office = data[data["remote_ratio"] == 0]  # Filter karyawan yang tidak remote
+remote = data[data["remote_ratio"] > 0]   # Filter karyawan yang remote
+
+# Hitung rata-rata gaji
+office_salary = office["salary_in_usd"].mean()
+remote_salary = remote["salary_in_usd"].mean()
+
+
+# Buat DataFrame untuk grafik batang
+bar_data = pd.DataFrame({
+    "Lokasi Kerja": ["Kantor", "Remote"],
+    "Gaji Rata-rata (USD)": [office_salary, remote_salary]
+})
+plt.xticks(rotation='horizontal')
+# Tampilkan grafik batang
+st.bar_chart(bar_data.set_index("Lokasi Kerja"))
+
+# Tampilkan teks pada grafik
+st.write("Gaji Rata-rata:")
+st.write("Kantor: $", office_salary)
+st.write("Remote: $", remote_salary)

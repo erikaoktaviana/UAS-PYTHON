@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
+import seaborn as sns
 
 # Muat dataset
 data = pd.read_csv("shopping_trends.csv")
@@ -12,7 +13,7 @@ st.set_page_config(page_title="Shopping Trends")
 st.subheader("Dataset Shopping Trends")
 st.write(data)
 
-
+sns.set_palette("husl")
 
 
 st.header("")
@@ -108,6 +109,25 @@ plt.xticks(rotation='horizontal')
 st.pyplot(fig)
 
 
+st.header("")
+st.header("")
+st.subheader("Menampilkan Metode Pengiriman yang Paling Populer")
+# ---------------------------------------------------------------
+# Hitung jumlah pengiriman per metode
+shipping_counts = data['Shipping Type'].value_counts()
+
+# Buat pie chart
+fig, ax = plt.subplots()
+ax.pie(shipping_counts, labels=shipping_counts.index, autopct='%1.1f%%', startangle=90)
+ax.axis('equal')  # Pastikan pie chart terlihat seperti lingkaran
+st.pyplot(fig)
+
+
+# Tampilkan hasil di Streamlit
+st.write("Jumlah Pengiriman per Metode:")
+st.write(shipping_counts)
+
+
 
 
 st.header("")
@@ -131,25 +151,24 @@ for i, v in enumerate(average_purchase_by_discount['Purchase Amount (USD)']):
 st.pyplot(fig)
 
 
+
 st.header("")
 st.header("")
-st.subheader("Menampilkan Metode Pengiriman yang Paling Populer")
+st.subheader("Menampilkan Grafik Item Pembelian")
 # ---------------------------------------------------------------
-# Hitung jumlah pengiriman per metode
-shipping_counts = data['Shipping Type'].value_counts()
+# Hitung jumlah pembelian per item
+top_items = data['Item Purchased'].value_counts()
 
-# Buat pie chart
-fig, ax = plt.subplots()
-ax.pie(shipping_counts, labels=shipping_counts.index, autopct='%1.1f%%', startangle=90)
-ax.axis('equal')  # Pastikan pie chart terlihat seperti lingkaran
+# Set judul halaman
+st.title("Grafik Pembelian Item Tertinggi")
+
+# Tampilkan grafik batang pembelian item tertinggi
+fig, ax = plt.subplots(figsize=(10, 6))
+top_items[:10].plot(kind='bar', ax=ax)
+plt.xlabel('Item')
+plt.ylabel('Jumlah Pembelian')
+plt.xticks(rotation='horizontal')
 st.pyplot(fig)
-
-
-# Tampilkan hasil di Streamlit
-st.write("Jumlah Pengiriman per Metode:")
-st.write(shipping_counts)
-
-
 
 
 st.header("")

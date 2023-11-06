@@ -13,6 +13,10 @@ st.set_page_config(page_title="Customer Shopping")
 st.subheader("Dataset Customer Shopping")
 st.write(data)
 
+sns.set_palette("deep")
+
+
+
 # Hitung dan tampilkan total jumlah customer
 total_customer = data.shape[0]  # Menghitung jumlah baris dalam DataFrame
 st.subheader('Total Customer:')
@@ -30,7 +34,7 @@ jumlah_pembelian_per_shopping_mall = data['shopping_mall'].value_counts()
 
 
 fig, ax = plt.subplots(figsize=(16, 6))
-sns.countplot(x='shopping_mall', data=data, ax=ax, )
+sns.countplot(x='shopping_mall', data=data, ax=ax, palette='Blues' )
 plt.xticks(rotation='horizontal')
 st.pyplot(fig)
 
@@ -44,7 +48,7 @@ st.write(jumlah_pembelian_per_shopping_mall)
 
 st.header("")
 st.header("")
-st.subheader("Visualisasi Data Pembelian per Category di Setiap Mall")
+st.subheader("Menampilkan Data Pembelian per Category di Setiap Mall")
 # ---------------------------------------------------------------
 
 # Buat pilihan (select) untuk filter berdasarkan kategori produk
@@ -60,7 +64,7 @@ jumlah_pembelian_per_mall.columns = ['Shopping Mall', 'Jumlah Pembelian']
 
 # Grafik jumlah pembelian per pusat perbelanjaan
 fig, ax = plt.subplots(figsize=(16, 6))
-sns.barplot(x='Shopping Mall', y='Jumlah Pembelian', data=jumlah_pembelian_per_mall, ax=ax)
+sns.barplot(x='Shopping Mall', y='Jumlah Pembelian', data=jumlah_pembelian_per_mall, ax=ax, palette='deep')
 plt.xticks(rotation='horizontal')
 
 # Tambahkan teks jumlah pembelian di atas batang
@@ -76,9 +80,10 @@ st.header("")
 st.header("")
 st.subheader("Menampilkan Distribusi Umur Pelanggan")
 # ---------------------------------------------------------------
+
 # Membuat histogram umur pelanggan
 fig, ax = plt.subplots(figsize=(10, 6))
-ax.hist(data['age'], bins=10, edgecolor='k', rwidth=0.8, color='skyblue')
+ax.hist(data['age'], bins=10, edgecolor='k', rwidth=0.8)
 ax.set_xlabel('Umur')
 ax.set_ylabel('Jumlah Pelanggan')
 ax.set_title('Distribusi Umur Pelanggan')
@@ -88,7 +93,6 @@ bin_counts, bin_edges, _ = plt.hist(data['age'], bins=10, rwidth=0.8)
 for count, x in zip(bin_counts, bin_edges):
     if count > 0:
         ax.annotate(str(int(count)), xy=(x, count), xytext=(25, 5), textcoords='offset points', ha='center', va='bottom')
-
 # Menampilkan grafik menggunakan st.pyplot() dengan objek gambar (figure)
 st.pyplot(fig)
 
