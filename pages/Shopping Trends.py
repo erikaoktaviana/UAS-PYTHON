@@ -12,6 +12,9 @@ st.set_page_config(page_title="Shopping Trends")
 st.subheader("Dataset Shopping Trends")
 st.write(data)
 
+
+
+
 st.header("")
 st.header("")
 st.subheader("Menampilkan Analisis Kualitas Produk")
@@ -33,6 +36,7 @@ most_common_color = filtered_data["Color"].mode().values[0]
 
 # Menemukan kategori untuk item yang dipilih
 item_category = filtered_data["Category"].values[0]
+
 
 # Tampilkan hasil analisis
 st.write(f"Analisis untuk item {selected_item}:")
@@ -134,16 +138,17 @@ st.subheader("Menampilkan Metode Pengiriman yang Paling Populer")
 # Hitung jumlah pengiriman per metode
 shipping_counts = data['Shipping Type'].value_counts()
 
-# Tampilkan hasil di Streamlit
-st.write("Jumlah Pengiriman per Metode:")
-st.write(shipping_counts)
-
 # Buat pie chart
 fig, ax = plt.subplots()
 ax.pie(shipping_counts, labels=shipping_counts.index, autopct='%1.1f%%', startangle=90)
 ax.axis('equal')  # Pastikan pie chart terlihat seperti lingkaran
-
 st.pyplot(fig)
+
+
+# Tampilkan hasil di Streamlit
+st.write("Jumlah Pengiriman per Metode:")
+st.write(shipping_counts)
+
 
 
 

@@ -20,9 +20,31 @@ st.write(f'Total: {total_customer}')
 
 
 
+
 st.header("")
 st.header("")
-st.subheader("Visualisasi Data Pembelian")
+st.subheader('Menampilkan Grafik Jumlah Pembelian per Shopping Mall')
+# ---------------------------------------------------------------
+# Hitung jumlah pembelian di setiap pusat perbelanjaan
+jumlah_pembelian_per_shopping_mall = data['shopping_mall'].value_counts()
+
+
+fig, ax = plt.subplots(figsize=(12, 6))
+sns.countplot(x='shopping_mall', data=data, ax=ax)
+plt.xticks(rotation='horizontal')
+st.pyplot(fig)
+
+# Tampilkan jumlah pembelian di setiap pusat perbelanjaan
+st.subheader('Jumlah Pembelian per Shopping Mall:')
+st.write(jumlah_pembelian_per_shopping_mall)
+
+
+
+
+
+st.header("")
+st.header("")
+st.subheader("Visualisasi Data Pembelian per Category di Setiap Mall")
 # ---------------------------------------------------------------
 
 # Buat pilihan (select) untuk filter berdasarkan kategori produk
@@ -117,21 +139,6 @@ st.pyplot(fig)
 
 
 
-st.header("")
-st.header("")
-st.subheader('Menampilkan Grafik Jumlah Pembelian per Shopping Mall')
-# ---------------------------------------------------------------
-# Hitung jumlah pembelian di setiap pusat perbelanjaan
-jumlah_pembelian_per_shopping_mall = data['shopping_mall'].value_counts()
 
-
-fig, ax = plt.subplots(figsize=(12, 6))
-sns.countplot(x='shopping_mall', data=data, ax=ax)
-plt.xticks(rotation='horizontal')
-st.pyplot(fig)
-
-# Tampilkan jumlah pembelian di setiap pusat perbelanjaan
-st.subheader('Jumlah Pembelian per Shopping Mall:')
-st.write(jumlah_pembelian_per_shopping_mall)
 
 
