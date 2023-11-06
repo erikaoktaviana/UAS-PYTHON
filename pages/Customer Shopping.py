@@ -29,8 +29,8 @@ st.subheader('Menampilkan Grafik Jumlah Pembelian per Shopping Mall')
 jumlah_pembelian_per_shopping_mall = data['shopping_mall'].value_counts()
 
 
-fig, ax = plt.subplots(figsize=(12, 6))
-sns.countplot(x='shopping_mall', data=data, ax=ax)
+fig, ax = plt.subplots(figsize=(16, 6))
+sns.countplot(x='shopping_mall', data=data, ax=ax, )
 plt.xticks(rotation='horizontal')
 st.pyplot(fig)
 
