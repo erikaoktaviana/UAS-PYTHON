@@ -14,7 +14,7 @@ st.write(data)
 
 st.header("")
 st.header("")
-st.subheader("Analisis Kualitas Produk")
+st.subheader("Menampilkan Analisis Kualitas Produk")
 # ---------------------------------------------------------------
 
 # Pilih item yang ingin dianalisis
@@ -100,6 +100,7 @@ payment_counts = data['Preferred Payment Method'].value_counts()
 plt.pie(payment_counts, labels=payment_counts.index, autopct='%1.1f%%', startangle=140)
 plt.title('Pie Chart Metode Pembayaran yang Populer')
 plt.show()
+plt.xticks(rotation='horizontal')
 st.pyplot(fig)
 
 
@@ -107,7 +108,7 @@ st.pyplot(fig)
 
 st.header("")
 st.header("")
-st.subheader("Pengaruh Diskon terhadap Pembelian")
+st.subheader("Menampilkan Pengaruh Diskon terhadap Pembelian")
 # ---------------------------------------------------------------
 # Menghitung rata-rata pembelian per tingkat diskon
 average_purchase_by_discount = data.groupby('Discount Applied')['Purchase Amount (USD)'].mean().reset_index()
@@ -126,14 +127,51 @@ for i, v in enumerate(average_purchase_by_discount['Purchase Amount (USD)']):
 st.pyplot(fig)
 
 
+st.header("")
+st.header("")
+st.subheader("Menampilkan Metode Pengiriman yang Paling Populer")
+# ---------------------------------------------------------------
+# Hitung jumlah pengiriman per metode
+shipping_counts = data['Shipping Type'].value_counts()
+
+# Tampilkan hasil di Streamlit
+st.write("Jumlah Pengiriman per Metode:")
+st.write(shipping_counts)
+
+# Buat pie chart
+fig, ax = plt.subplots()
+ax.pie(shipping_counts, labels=shipping_counts.index, autopct='%1.1f%%', startangle=90)
+ax.axis('equal')  # Pastikan pie chart terlihat seperti lingkaran
+
+st.pyplot(fig)
+
 
 
 st.header("")
 st.header("")
-st.subheader("Statistik Deskriptif untuk Rating Ulasan (Review Rating)")
+st.subheader("Menampilkan Frekuensi Pembelian Pelanggan")
+# ---------------------------------------------------------------
+# Hitung frekuensi pembelian
+frequency_counts = data['Frequency of Purchases'].value_counts()
+
+# Tampilkan hasil di Streamlit
+st.write("Data Frekuensi Pembelian:")
+st.write(frequency_counts)
+
+
+
+
+st.header("")
+st.header("")
+st.subheader("Menampilkan Statistik Deskriptif untuk Rating Ulasan (Review Rating)")
 # ---------------------------------------------------------------
 rating_stats = data["Review Rating"].describe()
 st.write(rating_stats)
+
+
+
+
+
 
 
 
