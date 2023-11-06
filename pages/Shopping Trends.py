@@ -159,9 +159,6 @@ st.subheader("Menampilkan Grafik Item Pembelian")
 # Hitung jumlah pembelian per item
 top_items = data['Item Purchased'].value_counts()
 
-# Set judul halaman
-st.title("Grafik Pembelian Item Tertinggi")
-
 # Tampilkan grafik batang pembelian item tertinggi
 fig, ax = plt.subplots(figsize=(10, 6))
 top_items[:10].plot(kind='bar', ax=ax)
